@@ -3,6 +3,13 @@ import { Index } from "elasticlunr"
 import { Link } from "gatsby"
 import styled from "styled-components"
 
+//Styled components
+const StyledSearch = styled.div`
+  input {
+    width: 100%;
+  }
+`
+
 export default class Search extends Component {
   state = {
     query: ``,
@@ -11,7 +18,7 @@ export default class Search extends Component {
 
   render() {
     return (
-      <div>
+      <StyledSearch>
         <input type="text" value={this.state.query} onChange={this.search} />
         <ul>
           {this.state.results.map(page => (
@@ -21,7 +28,7 @@ export default class Search extends Component {
             </li>
           ))}
         </ul>
-      </div>
+      </StyledSearch>
     )
   }
 
