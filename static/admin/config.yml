@@ -5,7 +5,7 @@ backend:
   base_url: http://localhost:3000
   auth_endpoint: /auth
 
-site_id: http://localhost:8000
+site_id: http://gt3docs.s3-website-us-east-1.amazonaws.com/
 media_folder: "static/img"
 public_folder: "/img"
 
