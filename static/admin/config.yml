@@ -1,0 +1,24 @@
+publish_mode: editorial_workflow
+backend:
+  name: github
+  repo: rivnatmalsa/docs-portal
+  base_url: http://localhost:3000
+  auth_endpoint: /auth
+
+site_id: http://localhost:8000
+media_folder: "static/img"
+public_folder: "/img"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
