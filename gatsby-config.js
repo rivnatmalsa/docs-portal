@@ -1,3 +1,5 @@
+const path = require("path")
+
 module.exports = {
   siteMetadata: {
     title: `GT3 Documentation Portal`,
@@ -85,6 +87,11 @@ module.exports = {
             title: node => node.frontmatter.title,
             tags: node => node.frontmatter.tags,
             description: node => node.frontmatter.description,
+            path: node =>
+              path.basename(
+                node.fileAbsolutePath,
+                path.extname(node.fileAbsolutePath)
+              ),
             html: node => node.internal.content,
           },
         },
