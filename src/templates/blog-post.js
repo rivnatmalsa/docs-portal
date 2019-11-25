@@ -1,9 +1,23 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
+import styled from "styled-components"
 import Layout from "../components/layout"
 
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from "../utils/typography"
+
+const Styledh1 = styled.h1`
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e47911;
+  padding-top: 20px;
+`
+
+const StyledDate = styled.p`
+  font-size: 14px;
+  padding-top: 5px;
+`
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -12,26 +26,11 @@ class BlogPostTemplate extends React.Component {
     const { previous, next } = this.props.pageContext
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout>
         <article>
           <header>
-            <h1
-              style={{
-                marginTop: rhythm(1),
-                marginBottom: 0,
-              }}
-            >
-              {post.frontmatter.title}
-            </h1>
-            <p
-              style={{
-                ...scale(-1 / 5),
-                display: `block`,
-                marginBottom: rhythm(1),
-              }}
-            >
-              {post.frontmatter.date}
-            </p>
+            <Styledh1>{post.frontmatter.title}</Styledh1>
+            <StyledDate>{post.frontmatter.date}</StyledDate>
           </header>
           <section dangerouslySetInnerHTML={{ __html: post.html }} />
           <hr

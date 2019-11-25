@@ -1,72 +1,37 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
-
+import styled from "styled-components"
 import Layout from "../components/layout"
 
-import { rhythm } from "../utils/typography"
-
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
-
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
-          return (
-            <article key={node.fields.slug}>
-              <header>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                  }}
-                >
-                  <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-              </header>
-              <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </section>
-            </article>
-          )
-        })}
-      </Layout>
-    )
-  }
-}
-
-export default BlogIndex
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
-        }
-      }
-    }
-  }
+const Styledh1 = styled.h1`
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e47911;
+  padding-top: 20px;
 `
+
+const StyledDate = styled.p`
+  font-size: 14px;
+  padding-top: 5px;
+`
+
+export default () => {
+  return (
+    <Layout>
+      <article>
+        <header>
+          <Styledh1>Getting Started</Styledh1>
+        </header>
+        <StyledDate>November 25, 2019</StyledDate>
+        <section>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis fugiat
+          consectetur iste quia adipisci. Ab doloribus suscipit porro optio est
+          aperiam, enim officia provident amet impedit quidem explicabo error
+          tenetur!
+        </section>
+        <hr />
+      </article>
+    </Layout>
+  )
+}
