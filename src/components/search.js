@@ -5,8 +5,13 @@ import styled from "styled-components"
 
 //Styled components
 const StyledSearch = styled.div`
+  margin-right: 10px;
   input {
     width: 100%;
+  }
+
+  ul {
+    margin-bottom: 0;
   }
 `
 
@@ -23,7 +28,7 @@ export default class Search extends Component {
         <ul>
           {this.state.results.map(page => (
             <li key={page.id}>
-              <Link to={"/" + page.path}>{page.title}</Link>
+              <Link to={`/${page.path}/`}>{page.title}</Link>
               {": " + page.description}
             </li>
           ))}
