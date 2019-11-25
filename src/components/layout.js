@@ -1,78 +1,124 @@
 import React from "react"
 import { Link } from "gatsby"
-
-import { rhythm, scale } from "../utils/typography"
+import styled, { createGlobalStyle } from "styled-components"
 import SearchBar from "./searchbar"
+import Header from "./header"
+import GetPosts from "../hooks/get-posts"
 
-class Layout extends React.Component {
-  render() {
-    const { location, title, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+const GlobalStyle = createGlobalStyle`
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
 
-    if (location.pathname === rootPath) {
-      header = (
-        <>
-          <SearchBar />
-          <h1
-            style={{
-              ...scale(1.5),
-              marginBottom: rhythm(1.5),
-              marginTop: 0,
-            }}
-          >
-            <Link
-              style={{
-                boxShadow: `none`,
-                textDecoration: `none`,
-                color: `inherit`,
-              }}
-              to={`/`}
-            >
-              {title}
-            </Link>
-          </h1>
-        </>
-      )
-    } else {
-      header = (
-        <>
-          <SearchBar />
-          <h3
-            style={{
-              fontFamily: `Montserrat, sans-serif`,
-              marginTop: 0,
-            }}
-          >
-            <Link
-              style={{
-                boxShadow: `none`,
-                textDecoration: `none`,
-                color: `inherit`,
-              }}
-              to={`/`}
-            >
-              {title}
-            </Link>
-          </h3>
-        </>
-      )
+html,
+  body {
+    margin: 0;
+    color: #555;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+    font-size: 18px;
+    line-height: 1.4;
+    /* remove margin for the main div that Gatsby mounts into */
+    > div {
+      margin-top: 0;
     }
-    return (
-      <div
-        style={{
-          marginLeft: `auto`,
-          marginRight: `auto`,
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-        }}
-      >
-        <header>{header}</header>
-        <main>{children}</main>
-        <footer></footer>
-      </div>
-    )
   }
+`
+
+const MainContainer = styled.main`
+  margin: 0 auto;
+  max-width: 95vw;
+  padding: 20px 0;
+  display: flex;
+  height: calc(100vh - 70px);
+  position: relative;
+  top: 70px;
+  overflow: none;
+`
+
+const LeftContainer = styled.div`
+  width: 22%;
+  border-right: 1px solid #ccc;
+
+  h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    display: inline;
+  }
+`
+
+const RightContainer = styled.div`
+  width: 70%;
+  margin: 0 auto;
+  overflow-y: auto;
+`
+
+const NavList = styled.ul`
+  padding: 0px 15px;
+  margin: 0;
+  padding-left: 15px;
+  background-color: #fff;
+  list-style: none;
+
+  li {
+    padding-top: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    list-style-type: none;
+    background-color: #fff;
+    font: normal 14px Amazon Ember, Helvetica, Arial, sans-serif;
+  }
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  box-shadow: none;
+
+  :hover {
+    color: #e48700;
+  }
+
+  &.current-page {
+    color: #e48700;
+  }
+`
+
+const Layout = ({ children }) => {
+  const posts = GetPosts()
+
+  return (
+    <>
+      <GlobalStyle />
+      <Header />
+      <MainContainer>
+        <LeftContainer>
+          <h3>Video Ad Server Documentation</h3>
+          <SearchBar />
+          <NavList>
+            <li>
+              <StyledLink to="/" activeClassName="current-page">
+                Getting Started
+              </StyledLink>
+            </li>
+            {posts.map(({ slug, title }) => {
+              return (
+                <li key={slug}>
+                  <StyledLink to={slug} activeClassName="current-page">
+                    {title}
+                  </StyledLink>
+                </li>
+              )
+            })}
+          </NavList>
+        </LeftContainer>
+        <RightContainer>{children}</RightContainer>
+      </MainContainer>
+      <footer></footer>
+    </>
+  )
 }
 
 export default Layout
